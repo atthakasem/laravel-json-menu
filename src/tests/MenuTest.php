@@ -4,15 +4,13 @@ namespace Tests;
 
 use Atthakasem\LaravelJsonMenu\LaravelJsonMenu;
 use ErrorException;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Orchestra\Testbench\TestCase;
 
 class MenuTest extends TestCase
 {
-    protected $menu;
-    protected $menuFolder = '';
-    protected $emptyFolder = '';
-    protected $multipleFolder = '';
+    protected $menuFolder;
+    protected $emptyFolder;
+    protected $multipleFolder;
 
     /**
      * Setup the test environment.
@@ -21,58 +19,45 @@ class MenuTest extends TestCase
     {
         parent::setUp();
 
-        $this->menuFolder = __DIR__ . '/menus';
-        $this->emptyFolder = __DIR__ . '/menus/purposely_empty';
+        $this->menuFolder     = __DIR__ . '/menus';
+        $this->emptyFolder    = __DIR__ . '/menus/purposely_empty';
         $this->multipleFolder = __DIR__ . '/menus/multiple_menu_files';
-        $this->menu = new LaravelJsonMenu($this->menuFolder);
-    }
-
-    /** @test */
-    public function it_detects_a_json_file()
-    {
-        $this->assertJson(file_get_contents($this->menu->getFiles()[0]));
     }
 
     /** @test */
     public function it_loads_the_json_file()
     {
-        $this->menu->load('main');
-        $this->assertIsArray($this->menu->getStructure());
-        $this->assertNotEmpty($this->menu->getStructure());
+        $package = new LaravelJsonMenu('main', $this->menuFolder);
+        $this->assertIsArray($package->menu->getStructure());
+        $this->assertNotEmpty($package->menu->getStructure());
     }
 
     /** @test */
     public function it_loads_a_json_without_having_to_specify_a_name()
     {
-        $this->menu->load();
-        $this->assertIsArray($this->menu->getStructure());
-        $this->assertNotEmpty($this->menu->getStructure());
+        $package = new LaravelJsonMenu(null, $this->menuFolder);
+        $this->assertIsArray($package->menu->getStructure());
+        $this->assertNotEmpty($package->menu->getStructure());
     }
 
     /** @test */
-    public function it_fails_when_no_menu_files_exist()
+    public function it_fails_when_no_menu_files_exist_during_named_call()
     {
         $this->expectException(ErrorException::class);
-        $this->menu->setPath($this->emptyFolder);
-        $this->menu->load('main');
-        $this->menu->setPath($this->menuFolder);
+        new LaravelJsonMenu('main', $this->emptyFolder);
     }
 
     /** @test */
-    public function it_fails_when_no_menu_files_exist_2()
+    public function it_fails_when_no_menu_files_exist_during_nameless_call()
     {
-        $this->expectException(FileNotFoundException::class);
-        $this->menu->setPath($this->emptyFolder);
-        $this->menu->load();
-        $this->menu->setPath($this->menuFolder);
+        $this->expectException(ErrorException::class);
+        new LaravelJsonMenu(null, $this->emptyFolder);
     }
 
     /** @test */
     public function it_fails_when_calling_the_menu_namelessly_but_multiple_menu_files_exist()
     {
         $this->expectException(ErrorException::class);
-        $this->menu->setPath($this->multipleFolder);
-        $this->menu->load();
-        $this->menu->setPath($this->menuFolder);
+        new LaravelJsonMenu(null, $this->multipleFolder);
     }
 }
