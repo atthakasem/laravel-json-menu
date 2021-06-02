@@ -1,0 +1,41 @@
+{
+    "name": "atthakasem/laravel-json-menu",
+    "description": "A simple Laravel menu builder using JSON",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thitithan Atthakasem",
+            "email": "atthakasem@gmail.com",
+            "homepage": "https://www.fullauto.dev"
+        }
+    ],
+    "homepage": "https://github.com/atthakasem/laravel-json-menu",
+    "keywords": ["Laravel", "LaravelJsonMenu"],
+    "require": {
+        "illuminate/support": "~7|~8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~5|~6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Atthakasem\\LaravelJsonMenu\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Atthakasem\\LaravelJsonMenu\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Atthakasem\\LaravelJsonMenu\\LaravelJsonMenuServiceProvider"
+            ],
+            "aliases": {
+                "LaravelJsonMenu": "Atthakasem\\LaravelJsonMenu\\Facades\\LaravelJsonMenu"
+            }
+        }
+    }
+}
