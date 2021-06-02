@@ -15,7 +15,7 @@ class LaravelJsonMenuServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::directive('menu', function ($expression) {
-            return "<?= (new Atthakasem\LaravelJsonMenu\LaravelJsonMenu)->load($expression)->output(); ?>";
+            return "<?= (new Atthakasem\LaravelJsonMenu\LaravelJsonMenu)->load($expression); ?>";
         });
 
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'atthakasem');

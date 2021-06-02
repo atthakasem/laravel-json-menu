@@ -18,38 +18,34 @@ class LaravelJsonMenu
     public function __construct(?string $path = null)
     {
         $this->path = $path ?? config('laravel-json-menu.path');
-        $this->_refreshFiles();
-    }
-
-    public function load(?string $menuName = null): LaravelJsonMenu
-    {
-        if (empty($menuName)) {
-            return $this->_loadOnly();
-        } else {
-            $menuName = trim($menuName, "\"'");
-            $path = "{$this->path}/{$menuName}.json";
-            return $this->_load($path);
-        }
-    }
-
-    public function loadFile(string $path): LaravelJsonMenu
-    {
-        return $this->_load($path);
-    }
-
-    protected function _refreshFiles(): void
-    {
-        $this->files = glob("{$this->path}/*.json");
+        $this->rescanFiles();
     }
 
     /**
-     * Loads the only existing menu file without having to specify its name
+     * Load the menu (with or without a specified menu name)
+     * and generate the html menu
      *
-     * @return void
+     * @param string|null $menuName
+     * @return void html menu
      */
-    protected function _loadOnly(): LaravelJsonMenu
+    public function load(?string $menuName = null): string
     {
-        $this->_refreshFiles();
+        if (empty($menuName)) {
+            return $this->loadOnly();
+        } else {
+            return $this->loadName($menuName);
+        }
+    }
+
+    /**
+     * Load the only existing menu without having to specify its name
+     * and generate the html menu
+     *
+     * @return string html menu
+     */
+    protected function loadOnly(): string
+    {
+        $this->rescanFiles();
 
         if (count($this->files) < 1) {
             throw new FileNotFoundException("No menu files found in {$this->path}");
@@ -57,23 +53,59 @@ class LaravelJsonMenu
             throw new ErrorException("Cannot call menu namelessly due to ambiguity. Multiple menu files detected.");
         }
 
-        return $this->_load($this->files[0]);
+        return $this->loadPath($this->files[0]);
     }
 
-    protected function _load(string $path): LaravelJsonMenu
+    /**
+     * Load the menu by menu name and generate the html menu
+     *
+     * @param string $menuName
+     * @return string html menu
+     */
+    protected function loadName(string $menuName): string
+    {
+        $menuName = trim($menuName, "\"'");
+        $path = "{$this->path}/{$menuName}.json";
+
+        return $this->loadPath($path);
+    }
+
+    /**
+     * Load a menu file by path and generate the html menu
+     *
+     * @param string $path
+     * @return string html menu
+     */
+    protected function loadPath(string $path): string
     {
         $this->structure = json_decode(file_get_contents($path));
-        return $this;
+
+        return $this->generate();
     }
 
-    public function output(): void
+    /**
+     * Rescan menu files and reassign $this->files
+     *
+     * @return void
+     */
+    protected function rescanFiles(): void
+    {
+        $this->files = glob("{$this->path}/*.json");
+    }
+
+    /**
+     * Generate the html menu
+     *
+     * @return string html menu
+     */
+    public function generate(): string
     {
         $html = '<ul>';
         foreach ($this->structure as $page) {
             $html .= $this->generateListElement($page);
         }
         $html .= '</ul>';
-        echo $this->addActiveClassToAncestors($html);
+        return $this->addActiveClassToAncestors($html);
     }
 
     private function generateListElement($page, $parentUrl = ''): string
