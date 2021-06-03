@@ -10,7 +10,6 @@ class Page
     public $name;
     public $url;
     public $external = false;
-    public $active = false;
     public $class;
     public $children;
 
@@ -71,8 +70,6 @@ class Page
             $this->url = $parentUrl ? "$parentUrl/$url" : $url;
             $this->url = url($this->url);
         }
-
-        $this->active = $this->isActive();
     }
 
     protected function parseObject(object $page, ?string $parentUrl): void
