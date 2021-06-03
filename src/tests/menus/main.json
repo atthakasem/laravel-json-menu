@@ -1,48 +1,25 @@
 [
+    "News",
+    "About us",
     {
-        "name": "Start",
-        "url" : "de/start"
+        "name": "Home",
+        "url": "/"
     },
     {
-        "name": "Über uns",
-        "url" : "de/ueber-uns",
-        "children": [
-            "Unsere Philosophie",
-            "Leistungen",
-            "Unsere Geschichte",
-            "Unsere Standorte"
-        ]
+        "name": "Career",
+        "children": ["Our perks", "Vacancies"]
     },
     {
-        "name": "Nachhaltigkeit",
-        "url" : "de/nachhaltigkeit"
+        "name": "Our partner",
+        "url": "https://www.google.com",
+        "external": true
     },
     {
-        "name": "Produkte",
-        "url" : "de/produkte",
-        "children": [
-            "Für Hunde",
-            "Für Katzen"
-        ]
+        "name": "Contact",
+        "route": "contact.show"
     },
     {
-        "name": "Qualität",
-        "url" : "de/qualitaet",
-        "children": [
-            "Forschung und Entwicklung",
-            "Unsere Produktion",
-            "Zertifizierungen"
-        ]
-    },
-    {
-        "name": "Karriere &amp; Ausbildung",
-        "url" : "de/karriere-und-ausbildung",
-        "children": [
-            "Ausbildung",
-            {
-                "external":"https://www.heristogether.de/heristo-gruppe/saturn-petcare-gmbh",
-                "name":"Karriere"
-            }
-        ]
+        "name": "Data protection",
+        "class": "my-css-class another-one"
     }
 ]
