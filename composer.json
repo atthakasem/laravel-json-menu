@@ -10,7 +10,7 @@
         }
     ],
     "homepage": "https://github.com/atthakasem/laravel-json-menu",
-    "keywords": ["Laravel", "LaravelJsonMenu"],
+    "keywords": ["laravel", "json", "menu", "navigation"],
     "require": {
         "php": "^7.2|^8.0",
         "illuminate/support": "~7|~8"
