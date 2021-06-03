@@ -43,11 +43,24 @@ class Page
 
     protected function isActive(): bool
     {
-        if (strpos(url()->current(), $this->url) !== false) {
+        if (
+            $this->currentUrlContainsPageUrl() && !$this->pageUrlIsHomePage() ||
+            ($this->pageUrlIsHomePage() && strlen(url()->current()) === strlen($this->url))
+        ) {
             return true;
         }
 
         return false;
+    }
+
+    protected function currentUrlContainsPageUrl(): bool
+    {
+        return strpos(url()->current(), $this->url) !== false;
+    }
+
+    protected function pageUrlIsHomePage(): bool
+    {
+        return $this->url === url('/');
     }
 
     protected function generateUserClassesString(): string
