@@ -37,10 +37,7 @@ $ composer require atthakasem/laravel-json-menu
             "url": "https://www.google.com",
             "external": true
         },
-        {
-            "name": "Contact us",
-            "url": "contact"
-        },
+        "Contact us",
         {
             "name": "Data protection",
             "class": "my-css-class another-one"
