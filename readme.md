@@ -38,8 +38,8 @@ $ composer require atthakasem/laravel-json-menu
             "external": true
         },
         {
-            "name": "Contact",
-            "route": "contact.show"
+            "name": "Contact us",
+            "url": "contact"
         },
         {
             "name": "Data protection",
