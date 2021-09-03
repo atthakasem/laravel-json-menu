@@ -18,7 +18,7 @@ $ composer require atthakasem/laravel-json-menu
 
 ## Usage
 
-1. Create a menu file in `resouces/menus/main.json` containing an array of pages. A page can be represented by a string or an object.
+1. Create a menu file in `resouces/menus/main.json` containing an array of pages. **A page can be represented by a string or an object.**
 
     ```json
     [
@@ -60,7 +60,7 @@ $ composer require atthakasem/laravel-json-menu
             </ul>
         </li>
         <li><a href="https://www.google.com" target="_blank">Our partner</a></li>
-        <li><a href="http://localhost/contact">Contact</a></li>
+        <li><a href="http://localhost/contact-us">Contact us</a></li>
         <li><a href="http://localhost/data-protection" class="my-css-class another-one">Data protection</a></li>
     </ul>
     ```
