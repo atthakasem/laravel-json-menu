@@ -2,6 +2,7 @@
 
 namespace Atthakasem\LaravelJsonMenu;
 
+use DOMNodeList;
 use Illuminate\Support\Collection;
 
 class Menu
@@ -17,6 +18,22 @@ class Menu
         foreach ($structure as $page) {
             $this->pages->add(new Page($page));
         }
+    }
+
+    public function generateBreadcrumb(DOMNodeList $activeLinks): string
+    {
+        $html = '<ul>';
+        foreach ($activeLinks as $key => $link) {
+            $active = $key === count($activeLinks) - 1 ? 'active' : '';
+            $html .= '<li>
+                    <a href="' . $link->getAttribute('href') . '" class="' . $active . '">' .
+                        $link->nodeValue .
+                    '</a>
+                </li>';
+        }
+        $html .= '</ul>';
+
+        return $this->stripWhitespaces($html);
     }
 
     public function generateHtml(): string
