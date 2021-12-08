@@ -32,7 +32,7 @@ class LaravelJsonMenu
     public function generateBreadcrumb(): string
     {
         $doc = new DOMDocument;
-        $doc->loadHTML($this->menu->generateHtml());
+        $doc->loadHTML(utf8_decode($this->menu->generateHtml()));
         $xpath = new DOMXPath($doc);
         $activeLinks = $xpath->query('//a[contains(concat(" ", normalize-space(@class), " "), " active ")]');
 
